@@ -1,8 +1,10 @@
 import type { Route } from "./+types/home";
 import Navbar from '~/components/Navbar';
-import {Link} from "react-router";
+import {Link, useLocation, useNavigate} from "react-router";
 import { resumes } from "../../constants";
 import ResumeCard from "~/components/ResumeCard";
+import {usePuterStore} from "~/lib/puter";
+import {useEffect} from "react";
 export function meta({}: Route.MetaArgs) {
     return [
         { title: "Skillara" },
@@ -11,7 +13,15 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-    // @ts-ignore
+    const { auth } = usePuterStore();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!auth.isAuthenticated) navigate('/auth?next=/');
+
+    }, [auth.isAuthenticated]);
+
+
     return <main className="bg-[url('/images/bg-main.svg')] bg-cover">
         <nav className="navbar">
             <Link to="/">
@@ -22,12 +32,13 @@ export default function Home() {
             </Link>
         </nav>
 
+
         <section className="main-section">
-            <div className="page-heading">
+            <div className="page-heading py-16">
                 <h1> Track Your Applications & Resume Ratings </h1>
                 <h2> Review your submissions and check AI-powered feedback.</h2>
             </div>
-        </section>
+
         {resumes.length > 0 && (
             <div className="resumes-section">
                 {resumes.map((resume) => (
@@ -35,5 +46,6 @@ export default function Home() {
                 ))}
             </div>
         )}
+        </section>
     </main>
 }

@@ -1,7 +1,7 @@
-import React from 'react'
-import { Link } from 'react-router'; // Or your router of choice
+import React from 'react';
+import { Link } from "react-router-dom";
 
-const Navbar: () => Element = () => {
+const Navbar = () => {
     return (
         <nav className="navbar">
             <Link to="/">
