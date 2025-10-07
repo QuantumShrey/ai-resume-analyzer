@@ -23,14 +23,7 @@ export default function Home() {
 
 
     return <main className="bg-[url('/images/bg-main.svg')] bg-cover">
-        <nav className="navbar">
-            <Link to="/">
-                <p className="text-2xl font-bold text-gradient">Skillara</p>
-            </Link>
-            <Link to="/upload" className="primary-button w-fit">
-                Upload Resume
-            </Link>
-        </nav>
+      <Navbar />
 
 
         <section className="main-section">
