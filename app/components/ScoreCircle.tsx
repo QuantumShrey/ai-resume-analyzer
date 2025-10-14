@@ -7,12 +7,12 @@ const ScoreCircle = ({ score = 75 }: { score: number }) => {
     const strokeDashoffset = circumference * (1 - progress);
 
     return (
-        <div className="relative w-[100px] h-[100px]">
+        <div className="relative w-[100px] h-[100px] animate-in zoom-in duration-500">
             <svg
                 height="100%"
                 width="100%"
                 viewBox="0 0 100 100"
-                className="transform -rotate-90"
+                className="transform -rotate-90 transition-transform duration-300 hover:scale-105"
             >
                 {/* Background circle */}
                 <circle
@@ -22,6 +22,7 @@ const ScoreCircle = ({ score = 75 }: { score: number }) => {
                     stroke="#e5e7eb"
                     strokeWidth={stroke}
                     fill="transparent"
+                    className="animate-in fade-in duration-300"
                 />
                 {/* Partial circle with gradient */}
                 <defs>
@@ -40,12 +41,16 @@ const ScoreCircle = ({ score = 75 }: { score: number }) => {
                     strokeDasharray={circumference}
                     strokeDashoffset={strokeDashoffset}
                     strokeLinecap="round"
+                    className="animate-in fade-in duration-1000 delay-300"
+                    style={{
+                        animation: 'drawCircle 1.5s ease-out forwards'
+                    }}
                 />
             </svg>
 
             {/* Score and issues */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="font-semibold text-sm">{`${score}/100`}</span>
+            <div className="absolute inset-0 flex flex-col items-center justify-center animate-in zoom-in duration-700 delay-500">
+                <span className="font-semibold text-sm transition-all duration-300 hover:text-blue-700">{`${score}/100`}</span>
             </div>
         </div>
     );
