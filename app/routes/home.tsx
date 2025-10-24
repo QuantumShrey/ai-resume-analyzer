@@ -28,14 +28,20 @@ export default function Home() {
 
         <section className="main-section">
             <div className="page-heading py-16">
-                <h1> Track Your Applications & Resume Ratings </h1>
-                <h2> Review your submissions and check AI-powered feedback.</h2>
+                <h1 className="animate-in fade-in slide-in-from-top-8 duration-1000"> Track Your Applications & Resume Ratings </h1>
+                <h2 className="animate-in fade-in slide-in-from-top-4 duration-1000 delay-300"> Review your submissions and check AI-powered feedback.</h2>
             </div>
 
         {resumes.length > 0 && (
             <div className="resumes-section">
-                {resumes.map((resume) => (
-                    <ResumeCard key={resume.id} resume={resume} />
+                {resumes.map((resume, index) => (
+                    <div 
+                        key={resume.id} 
+                        className="animate-in fade-in slide-in-from-bottom-8 duration-700"
+                        style={{ animationDelay: `${index * 200 + 600}ms` }}
+                    >
+                        <ResumeCard resume={resume} />
+                    </div>
                 ))}
             </div>
         )}

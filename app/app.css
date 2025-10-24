@@ -38,11 +38,11 @@ label {
     @apply text-dark-200;
 }
 input {
-    @apply w-full p-4 inset-shadow rounded-2xl focus:outline-none bg-white;
+    @apply w-full p-4 inset-shadow rounded-2xl focus:outline-none bg-white transition-all duration-300 focus:ring-2 focus:ring-blue-300;
 }
 
 textarea {
-    @apply w-full p-4 inset-shadow rounded-2xl focus:outline-none bg-white;
+    @apply w-full p-4 inset-shadow rounded-2xl focus:outline-none bg-white transition-all duration-300 focus:ring-2 focus:ring-blue-300;
 }
 
 form {
@@ -54,10 +54,10 @@ form {
         @apply bg-clip-text text-transparent bg-gradient-to-r from-[#AB8C95] via-[#000000] to-[#8E97C5];
     }
     .gradient-border {
-        @apply bg-gradient-to-b from-light-blue-100 to-light-blue-200 p-4 rounded-2xl;
+        @apply bg-gradient-to-b from-light-blue-100 to-light-blue-200 p-4 rounded-2xl transition-all duration-300;
     }
     .primary-button {
-        @apply primary-gradient text-white rounded-full px-4 py-2 cursor-pointer w-full;
+        @apply primary-gradient text-white rounded-full px-4 py-2 cursor-pointer w-full transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95;
     }
     .resume-nav {
         @apply flex flex-row justify-between items-center p-4 border-b border-gray-200;
@@ -85,7 +85,7 @@ form {
     }
 
     .resume-card {
-        @apply flex flex-col gap-8 h-[560px] w-[350px] lg:w-[430px] xl:w-[490px] bg-white rounded-2xl p-4;
+        @apply flex flex-col gap-8 h-[560px] w-[350px] lg:w-[430px] xl:w-[490px] bg-white rounded-2xl p-4 transition-all duration-300 hover:shadow-xl;
     }
 
     .resume-card-header {
@@ -112,7 +112,148 @@ form {
         @apply relative p-8 text-center transition-all duration-700 cursor-pointer bg-white rounded-2xl min-h-[208px];
     }
     .uploader-selected-file {
-        @apply flex items-center justify-between p-3 bg-gray-50 rounded-2xl;
+        @apply flex items-center justify-between p-3 bg-gray-50 rounded-2xl transition-all duration-300 hover:bg-gray-100;
+    }
+}
+
+/* Animation utility classes */
+@layer utilities {
+    .animate-slide-up {
+        animation: slideInUp 0.6s ease-out;
+    }
+    
+    .animate-slide-down {
+        animation: slideInDown 0.6s ease-out;
+    }
+    
+    .animate-slide-left {
+        animation: slideInLeft 0.6s ease-out;
+    }
+    
+    .animate-slide-right {
+        animation: slideInRight 0.6s ease-out;
+    }
+    
+    .animate-scale-in {
+        animation: scaleIn 0.5s ease-out;
+    }
+    
+    .animate-pulse-slow {
+        animation: pulse 2s infinite;
+    }
+    
+    .animate-bounce-gentle {
+        animation: bounce 2s infinite;
+    }
+    
+    .hover-lift {
+        transition: transform 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-5px);
+    }
+    
+    .hover-glow {
+        transition: box-shadow 0.3s ease;
+    }
+    
+    .hover-glow:hover {
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    /* Folder Upload Animation Styles */
+    .folder-upload-container {
+        --transition: 350ms;
+        --folder-W: 120px;
+        --folder-H: 80px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 20px;
+        background: linear-gradient(135deg, #f162ba, #ed45ae);
+        border-radius: 15px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        height: calc(var(--folder-H) * 1.7);
+        position: relative;
+        min-height: 200px;
+    }
+    
+    .folder-animation {
+        position: absolute;
+        top: -20px;
+        left: calc(50% - 60px);
+        animation: folderFloat 2.5s infinite ease-in-out;
+        transition: transform var(--transition) ease;
+    }
+    
+    .folder-upload-container:hover .folder-animation {
+        transform: scale(1.05);
+    }
+    
+    .folder .front-side,
+    .folder .back-side {
+        position: absolute;
+        transition: transform var(--transition);
+        transform-origin: bottom center;
+    }
+    
+    .folder .back-side::before,
+    .folder .back-side::after {
+        content: "";
+        display: block;
+        background-color: white;
+        opacity: 0.5;
+        z-index: 0;
+        width: var(--folder-W);
+        height: var(--folder-H);
+        position: absolute;
+        transform-origin: bottom center;
+        border-radius: 15px;
+        transition: transform 350ms;
+        z-index: 0;
+    }
+    
+    .folder-upload-container:hover .back-side::before {
+        transform: rotateX(-5deg) skewX(5deg);
+    }
+    
+    .folder-upload-container:hover .back-side::after {
+        transform: rotateX(-15deg) skewX(12deg);
+    }
+    
+    .folder .front-side {
+        z-index: 1;
+    }
+    
+    .folder-upload-container:hover .front-side {
+        transform: rotateX(-40deg) skewX(15deg);
+    }
+    
+    .folder .tip {
+        background: linear-gradient(135deg, #ff9a56, #ff6f56);
+        width: 80px;
+        height: 20px;
+        border-radius: 12px 12px 0 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        position: absolute;
+        top: -10px;
+        z-index: 2;
+    }
+    
+    .folder .cover {
+        background: linear-gradient(135deg, #ffe563, #ffc663);
+        width: var(--folder-W);
+        height: var(--folder-H);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+    }
+    
+    .upload-text {
+        text-align: center;
+        color: white;
+        margin-top: 10px;
     }
 }
 
@@ -148,5 +289,99 @@ form {
     }
     to {
         opacity: 1;
+    }
+}
+
+@keyframes drawCircle {
+    from {
+        stroke-dashoffset: 251.327;
+    }
+    to {
+        stroke-dashoffset: var(--circle-offset, 0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes folderFloat {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0px);
     }
 }

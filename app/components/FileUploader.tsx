@@ -27,16 +27,18 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
 
 
     return (
-        <div className="w-full gradient-border">
+        <div className="w-full">
             <div {...getRootProps()}>
                 <input {...getInputProps()} />
 
-                <div className="space-y-4 cursor-pointer">
+                <div className={`space-y-4 cursor-pointer transition-all duration-300 ${
+                    isDragActive ? 'scale-105 bg-blue-50' : 'hover:scale-102'
+                }`}>
                     {file ? (
-                        <div className="uploader-selected-file" onClick={(e) => e.stopPropagation()}>
-                            <img src="/images/pdf.png" alt="pdf" className="size-10" />
+                        <div className="uploader-selected-file animate-in fade-in slide-in-from-bottom-4 duration-500" onClick={(e) => e.stopPropagation()}>
+                            <img src="/images/pdf.png" alt="pdf" className="size-10 animate-in zoom-in duration-300" />
                             <div className="flex items-center space-x-3">
-                                <div>
+                                <div className="animate-in fade-in slide-in-from-left-4 duration-500 delay-150">
                                     <p className="text-sm font-medium text-gray-700 truncate max-w-xs">
                                         {file.name}
                                     </p>
@@ -45,23 +47,31 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
                                     </p>
                                 </div>
                             </div>
-                            <button className="p-2 cursor-pointer" onClick={(e) => {
+                            <button className="p-2 cursor-pointer transition-all duration-200 hover:scale-110 hover:bg-red-100 rounded-full" onClick={(e) => {
                                 onFileSelect?.(null)
                             }}>
-                                <img src="/icons/cross.svg" alt="remove" className="w-4 h-4" />
+                                <img src="/icons/cross.svg" alt="remove" className="w-4 h-4 transition-transform duration-200 hover:rotate-90" />
                             </button>
                         </div>
                     ): (
-                        <div>
-                            <div className="mx-auto w-16 h-16 flex items-center justify-center mb-2">
-                                <img src="/icons/info.svg" alt="upload" className="size-20" />
+                        <div className="folder-upload-container animate-in fade-in slide-in-from-bottom-4 duration-700">
+                            <div className="folder-animation">
+                                <div className="folder">
+                                    <div className="front-side">
+                                        <div className="tip"></div>
+                                        <div className="cover"></div>
+                                    </div>
+                                    <div className="back-side cover"></div>
+                                </div>
                             </div>
-                            <p className="text-lg text-gray-500">
-                                <span className="font-semibold">
-                                    Click to upload
-                                </span> or drag and drop
-                            </p>
-                            <p className="text-lg text-gray-500">PDF (max {formatSize(maxFileSize)})</p>
+                            <div className="upload-text animate-in fade-in slide-in-from-bottom-2 duration-500 delay-200">
+                                <p className="text-lg text-white font-medium">
+                                    <span className="font-semibold">
+                                        Click to upload
+                                    </span> or drag and drop
+                                </p>
+                                <p className="text-sm text-white/80 animate-in fade-in slide-in-from-bottom-2 duration-500 delay-300">PDF (max {formatSize(maxFileSize)})</p>
+                            </div>
                         </div>
                     )}
                 </div>
